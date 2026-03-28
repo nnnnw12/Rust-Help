@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUST Помощник — Рейд Калькулятор | by Hell Bro</title>
+  <meta name="description" content="Рейд калькулятор, калькулятор базы, серный калькулятор и гайды для Rust. Автор: Hell Bro">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💣</text></svg>" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" onclick="navigateTo('home')">
+      <div class="logo-icon rust-gradient">⊕</div>
+      <div class="logo-text">
+        <h1>RUST</h1>
+        <p>Помощник</p>
+      </div>
+    </a>
+    <nav class="desktop-nav">
+      <button class="nav-btn active" data-section="home">🏠 Главная</button>
+      <button class="nav-btn" data-section="raid">💣 Рейд калькулятор</button>
+      <button class="nav-btn" data-section="base">🏗️ Калькулятор базы</button>
+      <button class="nav-btn" data-section="sulfur">🟡 Серный калькулятор</button>
+      <button class="nav-btn" data-section="monuments">🗺️ Монументы</button>
+      <button class="nav-btn" data-section="wipe">✅ Чеклист вайпа</button>
+      <button class="nav-btn" data-section="tips">💡 Советы</button>
+    </nav>
+    <button class="mobile-toggle">☰</button>
+  </div>
+  <div class="mobile-menu">
+    <button data-section="home" class="active">🏠 Главная</button>
+    <button data-section="raid">💣 Рейд калькулятор</button>
+    <button data-section="base">🏗️ Калькулятор базы</button>
+    <button data-section="sulfur">🟡 Серный калькулятор</button>
+    <button data-section="monuments">🗺️ Монументы</button>
+    <button data-section="wipe">✅ Чеклист вайпа</button>
+    <button data-section="tips">💡 Советы</button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="section-home" data-spy="home">
+  <div class="hero-bg">
+    <div id="hero-particles"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🎮 Всё для выживания в Rust</div>
+    <h1>
+      <span class="white">RUST</span><br>
+      <span class="text-gradient">ПОМОЩНИК</span>
+    </h1>
+    <p class="hero-desc">Рейд калькулятор, расчёт базы, серный калькулятор, гайды по монументам и всё что нужно для доминирования на сервере</p>
+    <div class="hero-buttons">
+      <button class="btn-primary rust-gradient" onclick="navigateTo('raid')">💣 Рейд калькулятор</button>
+      <button class="btn-secondary" onclick="navigateTo('base')">🏗️ Калькулятор базы</button>
+    </div>
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="icon">🎯</div>
+        <h3>Рейд калькулятор</h3>
+        <p>Точный расчёт взрывчатки</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🛡️</div>
+        <h3>Защита базы</h3>
+        <p>Стоимость постройки</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h3>Вайп помощник</h3>
+        <p>Чеклисты и гайды</p>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">▼</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== RAID CALCULATOR ===== -->
+<section class="section" id="section-raid" data-spy="raid">
+  <div class="anim" style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title">💣 РЕЙД <span class="text-gradient">КАЛЬКУЛЯТОР</span></h2>
+    <p class="section-desc">Выбери цели рейда, количество и способ — получи точный расчёт серы и взрывчатки</p>
+  </div>
+  <div class="raid-layout">
+    <!-- Left: Targets -->
+    <div>
+      <div class="card" style="padding:20px">
+        <!-- Search -->
+        <div style="margin-bottom:16px">
+          <div class="search-wrap">
+            <input type="text" id="raid-search" class="search-input" placeholder="Поиск...">
+          </div>
+        </div>
+        <!-- Categories -->
+        <div class="filter-row" id="raid-categories"></div>
+        <!-- Tools -->
+        <div class="tool-row">
+          <button class="tool-btn active rust-gradient" data-tool="С4">💥 С4</button>
+          <button class="tool-btn" data-tool="Ракеты">🚀 Ракеты</button>
+          <button class="tool-btn" data-tool="Сатчели">🎒 Сатчели</button>
+          <button class="tool-btn" data-tool="Разрывные">🔫 Разрывные</button>
+        </div>
+        <!-- Targets Grid -->
+        <div class="targets-grid" id="raid-targets"></div>
+      </div>
+    </div>
+    <!-- Right: Summary -->
+    <div class="summary-panel">
+      <div class="summary-card">
+        <h3 class="summary-title">🔥 Итого рейд</h3>
+        <div id="raid-summary-content">
+          <p class="summary-empty">Нажмите на цель, чтобы добавить в рейд</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== BASE CALCULATOR ===== -->
+<section class="section" id="section-base" data-spy="base">
+  <div class="anim" style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title">🏗️ КАЛЬКУЛЯТОР <span class="text-gradient">БАЗЫ</span></h2>
+    <p class="section-desc">Рассчитай сколько ресурсов нужно на постройку дома. Выбери части и тир материала.</p>
+  </div>
+  <!-- Tier -->
+  <div class="tier-row">
+    <button class="tier-btn tier-twig" data-tier="twig">Солома</button>
+    <button class="tier-btn tier-wood" data-tier="wood">Дерево</button>
+    <button class="tier-btn tier-stone active rust-gradient" data-tier="stone">Камень</button>
+    <button class="tier-btn tier-metal" data-tier="metal">Металл</button>
+    <button class="tier-btn tier-armored" data-tier="armored">Бронь</button>
+  </div>
+  <!-- Presets -->
+  <div class="presets-row">
+    <button class="preset-btn" data-idx="0">🏚️ 2x1 (стартовая)</button>
+    <button class="preset-btn" data-idx="1">🏠 2x2 (основная)</button>
+    <button class="preset-btn" data-idx="2">🏡 2x2 с хонейкомбом</button>
+    <button class="preset-btn" data-idx="3">🏰 3x3 (большая)</button>
+  </div>
+  <div class="base-layout">
+    <div>
+      <div class="parts-grid" id="base-parts"></div>
+    </div>
+    <div class="summary-panel">
+      <div class="summary-card">
+        <h3 class="summary-title">🏠 Итого ресурсов</h3>
+        <div id="base-summary-content">
+          <p class="summary-empty">Выберите части для расчёта</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== SULFUR CALCULATOR ===== -->
+<section class="section" id="section-sulfur" data-spy="sulfur">
+  <div class="anim" style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title">🟡 СЕРНЫЙ <span class="text-gradient">КАЛЬКУЛЯТОР</span></h2>
+    <p class="section-desc">Введи количество серы — узнай сколько взрывчатки можно скрафтить и что зарейдить</p>
+  </div>
+  <div class="sulfur-section">
+    <div class="sulfur-input-card anim">
+      <label>Количество серы:</label>
+      <input type="number" id="sulfur-input" class="sulfur-input" value="10000">
+      <div class="quick-amounts">
+        <button class="quick-btn" data-amount="1000">1 000</button>
+        <button class="quick-btn" data-amount="2500">2 500</button>
+        <button class="quick-btn" data-amount="5000">5 000</button>
+        <button class="quick-btn active" data-amount="10000">10 000</button>
+        <button class="quick-btn" data-amount="25000">25 000</button>
+        <button class="quick-btn" data-amount="50000">50 000</button>
+        <button class="quick-btn" data-amount="100000">100 000</button>
+      </div>
+      <input type="range" id="sulfur-range" class="sulfur-range" min="0" max="100000" step="100" value="10000">
+    </div>
+    <div class="sulfur-results" id="sulfur-results"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== MONUMENTS ===== -->
+<section class="section" id="section-monuments" data-spy="monuments">
+  <div class="anim" style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title">🗺️ ГАЙД ПО <span class="text-gradient">МОНУМЕНТАМ</span></h2>
+    <p class="section-desc">Все монументы с описанием лута, уровнем опасности и необходимыми картами</p>
+  </div>
+  <div class="monuments-grid" id="monuments-grid">
+    <!-- Лаунч-сайт -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">🚀</span><div><h3>Лаунч-сайт</h3><span class="tier-badge tier-t3">T3</span></div></div><span class="danger-badge danger-high">⚠ Высокая</span></div><p class="monument-desc">Лучший лут. Нужна радзащита. Зелёная + красная карта. Крейт с военкой.</p></div>
+    <!-- Нефтяная вышка -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">🛢️</span><div><h3>Нефтяная вышка (Large)</h3><span class="tier-badge tier-t3">T3</span></div></div><span class="danger-badge danger-vhigh">⚠ Очень высокая</span></div><p class="monument-desc">Морской монумент. Тяжёлые учёные. Крейт наверху. Лучший морской лут.</p></div>
+    <!-- Военные туннели -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">🪖</span><div><h3>Военные туннели</h3><span class="tier-badge tier-t3">T3</span></div></div><span class="danger-badge danger-high">⚠ Высокая</span></div><p class="monument-desc">Подземный монумент. Много учёных. Нужна зелёная карта. Крейт с военкой.</p></div>
+    <!-- Аэродром -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">✈️</span><div><h3>Аэродром</h3><span class="tier-badge tier-t23">T2-T3</span></div></div><span class="danger-badge danger-medium">⚠ Средняя</span></div><p class="monument-desc">Большой монумент. Зелёная + синяя карта. Хороший лут в ангарах.</p></div>
+    <!-- Купольное здание -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">🏛️</span><div><h3>Купольное здание</h3><span class="tier-badge tier-t2">T2</span></div></div><span class="danger-badge danger-medium">⚠ Средняя</span></div><p class="monument-desc">Нужна синяя карта. Хороший лут наверху. Радиация.</p></div>
+    <!-- Водоочистка -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">💧</span><div><h3>Водоочистка</h3><span class="tier-badge tier-t2">T2</span></div></div><span class="danger-badge danger-medium">⚠ Средняя</span></div><p class="monument-desc">Синяя карта. Средний лут. Несколько учёных.</p></div>
+    <!-- Электростанция -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">⚡</span><div><h3>Электростанция</h3><span class="tier-badge tier-t2">T2</span></div></div><span class="danger-badge danger-low">⚠ Низкая</span></div><p class="monument-desc">Зелёная карта. Средний лут. Мало учёных.</p></div>
+    <!-- Суперморг -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">🏥</span><div><h3>Суперморг</h3><span class="tier-badge tier-t2">T2</span></div></div><span class="danger-badge danger-low">⚠ Низкая</span></div><p class="monument-desc">Хирургический стол. Зелёная карта. Медицинский лут.</p></div>
+    <!-- Лесопилка -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">🪓</span><div><h3>Лесопилка</h3><span class="tier-badge tier-t1">T1</span></div></div><span class="danger-badge danger-low">⚠ Низкая</span></div><p class="monument-desc">Много дерева. Простой лут. Мало опасности.</p></div>
+    <!-- Маяк -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">🗼</span><div><h3>Маяк</h3><span class="tier-badge tier-t1">T1</span></div></div><span class="danger-badge danger-low">⚠ Низкая</span></div><p class="monument-desc">Базовый лут. Хорошо для начала вайпа.</p></div>
+    <!-- Газозаправка -->
+    <div class="monument-card anim"><div class="monument-top"><div class="monument-info"><span class="emoji" style="font-size:32px">⛽</span><div><h3>Газозаправка</h3><span class="tier-badge tier-t1">T1</span></div></div><span class="danger-badge danger-low">⚠ Низкая</span></div><p class="monument-desc">Верстак 1 ур. Рециклер. Базовый лут.</p></div>
+  </div>
+  <!-- Cards info -->
+  <div class="cards-section anim">
+    <h3>⭐ Карточки доступа</h3>
+    <div class="cards-grid">
+      <div class="access-card card-green"><h4>Зелёная карта</h4><p>Находится в мелких монументах: газозаправка, маяк, суперморг. Стоит 20 скрапа у учёного.</p></div>
+      <div class="access-card card-blue"><h4>Синяя карта</h4><p>Получается из паззлов с зелёной картой. Электростанция, водоочистка, канализация.</p></div>
+      <div class="access-card card-red"><h4>Красная карта</h4><p>Из паззлов синей карты. Нужна для лаунч-сайта, военных туннелей, аэродрома (T3 лут).</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== WIPE CHECKLIST ===== -->
+<section class="section" id="section-wipe" data-spy="wipe">
+  <div class="anim" style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title">✅ ЧЕКЛИСТ <span class="text-gradient">ВАЙПА</span></h2>
+    <p class="section-desc">Следуй этому плану в начале вайпа, чтобы не потерять время и доминировать на сервере</p>
+  </div>
+  <div class="wipe-section">
+    <div class="progress-card anim">
+      <div class="progress-top">
+        <span class="label">Прогресс вайпа</span>
+        <div class="right">
+          <span class="progress-pct font-orbitron">0%</span>
+          <button class="progress-reset" onclick="resetChecklist()" title="Сбросить">↺</button>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill rust-gradient" style="width:0%"></div></div>
+      <p class="progress-sub">0 из 12 выполнено</p>
+    </div>
+    <div class="checklist" id="checklist"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== TIPS ===== -->
+<section class="section" id="section-tips" data-spy="tips">
+  <div class="anim" style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title">💡 СОВЕТЫ И <span class="text-gradient">ХИТРОСТИ</span></h2>
+    <p class="section-desc">Полезные советы для новичков и опытных игроков</p>
+  </div>
+
+  <!-- Smelting Table -->
+  <div class="smelting-table anim">
+    <h3>🔥 Переплавка</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Ресурс</th>
+          <th class="center">Вход</th>
+          <th class="center">Выход</th>
+          <th class="center">Время / шт</th>
+          <th class="right">Инфо</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="res-name"><span class="emoji">🟡</span><span>Серная руда</span></div></td>
+          <td class="center">1</td>
+          <td class="center accent">1</td>
+          <td class="center" style="color:rgba(192,184,168,0.5)">2.5с</td>
+          <td class="right dimmed">1 руда = 2.5 сек</td>
+        </tr>
+        <tr>
+          <td><div class="res-name"><span class="emoji">🔶</span><span>Металлическая руда</span></div></td>
+          <td class="center">1</td>
+          <td class="center accent">1</td>
+          <td class="center" style="color:rgba(192,184,168,0.5)">2.5с</td>
+          <td class="right dimmed">1 руда = 2.5 сек</td>
+        </tr>
+        <tr>
+          <td><div class="res-name"><span class="emoji">💎</span><span>HQM руда</span></div></td>
+          <td class="center">1</td>
+          <td class="center accent">1</td>
+          <td class="center" style="color:rgba(192,184,168,0.5)">10с</td>
+          <td class="right dimmed">1 руда = 10 сек</td>
+        </tr>
+        <tr>
+          <td><div class="res-name"><span class="emoji">🪵</span><span>Дерево → Уголь</span></div></td>
+          <td class="center">1</td>
+          <td class="center accent">0.75</td>
+          <td class="center" style="color:rgba(192,184,168,0.5)">—</td>
+          <td class="right dimmed">Топливо</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tips Grid -->
+  <div class="tips-grid">
+    <div class="tip-card anim">
+      <h3>⚔️ Бой</h3>
+      <ul class="tip-list">
+        <li>Всегда стреляй присев — отдача меньше, особенно с AK</li>
+        <li>Используй медпены перед тем как выходить на перестрелку</li>
+        <li>Не стой на месте — strafe (A/D) во время стрельбы</li>
+        <li>Пистолет Eoka — лучшее оружие для самого старта</li>
+        <li>Двустволка (DB) одна из лучших пушек для ближнего боя</li>
+        <li>Всегда носи с собой минимум 3 бинта и 1 медкит</li>
+      </ul>
+    </div>
+    <div class="tip-card anim">
+      <h3>🏠 Строительство</h3>
+      <ul class="tip-list">
+        <li>Ставь шкаф (TC) сразу — без него стены гниют</li>
+        <li>Airlock (двойной шлюз) обязателен — не дай доорить</li>
+        <li>Honeycomb — стены вокруг стен, +50% серы на рейд</li>
+        <li>Несколько спальных мешков на разных этажах</li>
+        <li>Металлические двери дешевле бронированных</li>
+        <li>Гаражная дверь = лучшее соотношение стоимости</li>
+        <li>Всегда ставь shotgun trap в шлюзе</li>
+      </ul>
+    </div>
+    <div class="tip-card anim">
+      <h3>⛏️ Фарм</h3>
+      <ul class="tip-list">
+        <li>Нажимай по горячей точке на ноде — 2x ресурсов</li>
+        <li>Jackhammer фармит в 3 раза быстрее кирки</li>
+        <li>Серные ноды (жёлтые) — приоритет для рейда</li>
+        <li>Чайный стол даёт бонус к фарму до +50%</li>
+        <li>Рециклер на газозаправке — безопасный скрап</li>
+        <li>Дорожные знаки = лучший металл через рециклер</li>
+        <li>Фарми ночью — меньше игроков, те же ресурсы</li>
+      </ul>
+    </div>
+    <div class="tip-card anim">
+      <h3>🛡️ Защита</h3>
+      <ul class="tip-list">
+        <li>Auto turret + камера = защита от офлайн рейда</li>
+        <li>Snap traps перед дверями отнимают 50 хп</li>
+        <li>Разбрасывай лут по нескольким шкафам</li>
+        <li>Не храни всё в одном ТС</li>
+        <li>Ставь window bars на все окна</li>
+        <li>Ловушки с дробью в коридорах</li>
+        <li>Свет + камеры = следи за базой из телефона</li>
+      </ul>
+    </div>
+    <div class="tip-card anim">
+      <h3>💡 Полезное</h3>
+      <ul class="tip-list">
+        <li>F1 → kill — респаун, если застрял</li>
+        <li>Зажми E на замке — поставить код</li>
+        <li>Alt + клик — быстрый перенос предметов</li>
+        <li>Shift + ПКМ — разделить стак пополам</li>
+        <li>Зажми S на лестнице чтобы спуститься</li>
+        <li>Крафт чертёж экономит время на T3 вещи</li>
+        <li>Тайники в лесу как запасной лут</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Craft Table -->
+  <div class="craft-table anim">
+    <h3>📊 Таблица крафта взрывчатки</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Взрывчатка</th>
+          <th class="center" style="color:var(--sulfur)">🟡 Сера</th>
+          <th class="center">Порох</th>
+          <th class="center">Взрывчатка</th>
+          <th class="center">Прочее</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="color:#fff;font-weight:500">💥 С4</td><td class="center sulfur-col">2 200</td><td class="center" style="color:rgba(192,184,168,0.7)">1 000</td><td class="center" style="color:rgba(192,184,168,0.7)">20</td><td class="center dimmed">5 ткани, 2 тех мусора</td></tr>
+        <tr><td style="color:#fff;font-weight:500">🚀 Ракета</td><td class="center sulfur-col">1 400</td><td class="center" style="color:rgba(192,184,168,0.7)">650</td><td class="center" style="color:rgba(192,184,168,0.7)">10</td><td class="center dimmed">2 трубы, 100 метала</td></tr>
+        <tr><td style="color:#fff;font-weight:500">🎒 Сатчель</td><td class="center sulfur-col">480</td><td class="center" style="color:rgba(192,184,168,0.7)">240</td><td class="center" style="color:rgba(192,184,168,0.7)">—</td><td class="center dimmed">4 бинкана, 1 верёвка</td></tr>
+        <tr><td style="color:#fff;font-weight:500">🔫 Разрывной</td><td class="center sulfur-col">25</td><td class="center" style="color:rgba(192,184,168,0.7)">10</td><td class="center" style="color:rgba(192,184,168,0.7)">—</td><td class="center dimmed">10 метала</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="anim">
+    <h3>RUST <span class="text-gradient">ПОМОЩНИК</span></h3>
+    <p class="desc">Калькуляторы, гайды и всё для выживания в Rust</p>
+    <div class="tags">
+      <span>💣 Рейд калькулятор</span>
+      <span>🏗️ Калькулятор базы</span>
+      <span>🟡 Серный калькулятор</span>
+      <span>🗺️ Монументы</span>
+      <span>✅ Чеклист вайпа</span>
+    </div>
+    <div class="author-line">
+      <p class="author">Made by Hell Bro 🔥</p>
+      <p class="disclaimer">Данные могут отличаться от актуальной версии игры. Rust™ является зарегистрированной торговой маркой Facepunch Studios.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button class="scroll-top rust-gradient" title="Наверх">↑</button>
+
+<!-- React root (unused but required by Vite) -->
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+<script src="/script.js"></script>
+</body>
+</html>
